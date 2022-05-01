@@ -5,7 +5,7 @@
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
+    [true, true, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
@@ -43,13 +43,12 @@
   <h1>Tetris</h1>
   <table class="playBoard">
     <tbody>
-      <!-- {tetris.map((gridY, i) => ( -->
       {#each blocks as gridY, i}
         <tr>
           <td class="extra" />
           {#each gridY as gridX, j}
             <td class={gridX ? "fill" : "empty"}>
-              {gridX}
+              <!-- {gridX} -->
             </td>
           {/each}
           <td class="extra" />
