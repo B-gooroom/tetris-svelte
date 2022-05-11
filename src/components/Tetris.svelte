@@ -39,9 +39,9 @@
   };
 </script>
 
-<div>
-  <h1>Tetris</h1>
-  <table class="playBoard">
+<h3>Play Tetris!</h3>
+<div class="board-wrapper">
+  <table class="play-board">
     <tbody>
       {#each blocks as gridY, i}
         <tr>
@@ -56,4 +56,20 @@
       {/each}
     </tbody>
   </table>
+  <div class="info-board">
+    <div class="level">LEVEL
+      <div class="detail">1</div>
+    </div>
+    <div class="level">SCORE
+      <div class="detail">0</div>
+    </div>
+    <div class="level">NEXT
+      <div class="detail">??</div>
+    </div>
+    <div class="level">HELP
+      <div class="detail">to be..</div>
+    </div>
+  </div>
 </div>
+
+<style lang="scss"></style>

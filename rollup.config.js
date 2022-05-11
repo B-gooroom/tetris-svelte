@@ -45,7 +45,7 @@ export default {
 			},
 			preprocess: sveltePreprocess({
 				scss: {
-					prependData: ['@import "./src/Tetris.scss";']
+					prependData: `@import "src/Tetris.scss";`
 				}
 			})
 		}),

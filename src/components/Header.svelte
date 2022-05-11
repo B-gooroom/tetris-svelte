@@ -1,3 +1,3 @@
 <header>
-  <p>Play Tetris!</p>
+  <p>Classic Arcade-game Project #2</p>
 </header>
