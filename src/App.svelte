@@ -9,8 +9,7 @@
 </main>
 
 <style lang="scss">
-  @import '../src/Tetris.scss';
-  
+
   main {
     text-align: center;
     padding: 1em;

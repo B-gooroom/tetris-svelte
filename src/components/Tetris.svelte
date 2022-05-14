@@ -5,7 +5,7 @@
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
-    [true, true, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
@@ -23,6 +23,14 @@
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
   ];
+  const O = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}];
+  const I = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 4, y: 3}];
+  const T = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 6, y: 0}, {x: 5, y: 1}];
+  const J = [{x: 5, y: 0}, {x: 5, y: 1}, {x: 5, y: 2}, {x: 4, y: 2}];
+  const L = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 5, y: 2}];
+  const Z = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 5, y: 1}, {x: 6, y: 1}];
+  const S = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}, {x: 5, y: 2}];
+
   const keyEvent = (event) => {
     switch (event.key) {
       case "ArrowLeft":
@@ -37,17 +45,29 @@
         break;
     }
   };
+  const checkGrid = (x, y) => {
+    let isFill = false;
+    for (let index = 0; index < S.length; index++) {
+      const child = S[index]; 
+      if (child.x === x && child.y === y) {
+        isFill = true;
+        break;
+      }
+    }
+    return isFill ? 'fill' : 'empty';
+  }
 </script>
 
 <h3>Play Tetris!</h3>
 <div class="board-wrapper">
   <table class="play-board">
     <tbody>
-      {#each blocks as gridY, i}
+      {#each blocks as gridY, y}
         <tr>
           <td class="extra" />
-          {#each gridY as gridX, j}
-            <td class={gridX ? "fill" : "empty"}>
+          {#each gridY as gridX, x}
+            <!-- <td class={gridX ? "fill" : "empty"}> -->
+            <td class={checkGrid(x, y)}>
               <!-- {gridX} -->
             </td>
           {/each}
