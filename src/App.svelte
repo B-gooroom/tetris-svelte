@@ -8,7 +8,7 @@
   <Tetris />
 </main>
 
-<style lang="scss">
+<style global lang="scss">
 
   main {
     text-align: center;

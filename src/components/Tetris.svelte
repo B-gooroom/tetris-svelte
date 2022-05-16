@@ -129,4 +129,4 @@ onDestroy(() => document.removeEventListener('keydown', keyEvent));
   </div>
 </div>
 
-<style lang="scss"></style>
+<style global lang="scss"></style>
