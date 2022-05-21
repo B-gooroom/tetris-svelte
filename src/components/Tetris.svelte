@@ -1,10 +1,12 @@
-<!-- TODO: 고정, 다음블럭 부르기(랜덤?)
+<!-- 
 TODO: 블럭들 transform
 TODO: x 한줄이 다 차면 없애기(한줄 out) - score +10
-TODO: timer 1000 - blocks y + 1 (한줄씩 내려오기) -->
+TODO: timer 1000 - blocks y + 1 (한줄씩 내려오기) 
+-->
 
 <script>
 import { onDestroy } from 'svelte';
+import _ from 'lodash';
 
 const blocks = [
   [false, false, false, false, false, false, false, false, false, false],
@@ -28,6 +30,7 @@ const blocks = [
   [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
 ];
+
 const O = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}];
 const I = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 4, y: 3}];
 const T = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 6, y: 0}, {x: 5, y: 1}];
@@ -35,9 +38,10 @@ const J = [{x: 5, y: 0}, {x: 5, y: 1}, {x: 5, y: 2}, {x: 4, y: 2}];
 const L = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 5, y: 2}];
 const Z = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 5, y: 1}, {x: 6, y: 1}];
 const S = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}, {x: 5, y: 2}];
+const blockShapes = [O, I, T, J, L, Z, S];
 
 // 블럭을 생성
-let currentBlock = JSON.parse(JSON.stringify(O));
+let currentBlock = _.cloneDeep(blockShapes[_.random(0, 6)]);
 
 const keyEvent = (event) => {
   console.log(event);
@@ -84,10 +88,8 @@ const keyEvent = (event) => {
         child.y += (blocks.length -1) - lastY;
         // blocks에 위치 반영
         blocks[child.y][child.x] = true;
-        console.log('nunu', child, blocks[child.y][child.x]);
       }
-      currentBlock = JSON.parse(JSON.stringify(I));
-      console.log("ArrowDown");
+      currentBlock = _.cloneDeep(blockShapes[_.random(0, 6)]);
       break;
       // TODO: 모양바꾸기(블럭)
       // case "ArrowUp":
