@@ -28,67 +28,72 @@ const blocks = [
   [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
 ];
-let O = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}];
-let I = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 4, y: 3}];
-let T = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 6, y: 0}, {x: 5, y: 1}];
-let J = [{x: 5, y: 0}, {x: 5, y: 1}, {x: 5, y: 2}, {x: 4, y: 2}];
-let L = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 5, y: 2}];
-let Z = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 5, y: 1}, {x: 6, y: 1}];
-let S = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}, {x: 5, y: 2}];
+const O = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}];
+const I = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 4, y: 3}];
+const T = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 6, y: 0}, {x: 5, y: 1}];
+const J = [{x: 5, y: 0}, {x: 5, y: 1}, {x: 5, y: 2}, {x: 4, y: 2}];
+const L = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}, {x: 5, y: 2}];
+const Z = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 5, y: 1}, {x: 6, y: 1}];
+const S = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}, {x: 5, y: 2}];
+
+// 블럭을 생성
+let currentBlock = JSON.parse(JSON.stringify(O));
 
 const keyEvent = (event) => {
   console.log(event);
   switch (event.key) {
     case "ArrowLeft":
-      if (O[0].x === 0) return;
-      for (let index = 0; index < O.length; index++) {
-        const child = O[index];
+      if (currentBlock[0].x === 0) return;
+      for (let index = 0; index < currentBlock.length; index++) {
+        const child = currentBlock[index];
         child.x -= 1;
       }
-      O = [...O];
+      currentBlock = [...currentBlock];
       break;
     case "ArrowRight":
-      if (O[0].x === 8) return;
-      for (let index = 0; index < O.length; index++) {
-        const child = O[index];
+      if (currentBlock[0].x === 8) return;
+      for (let index = 0; index < currentBlock.length; index++) {
+        const child = currentBlock[index];
         child.x += 1;
       }
-      O = [...O];
+      currentBlock = [...currentBlock];
       console.log("arrowRight");
       break;
     case "ArrowDown":
-      if (O[0].y === 18) return;
-      for (let index = 0; index < O.length; index++) {
-        const child = O[index];
+      if (currentBlock[0].y === 18) return;
+      for (let index = 0; index < currentBlock.length; index++) {
+        const child = currentBlock[index];
         child.y += 1;
       }
-      O = [...O];
+      currentBlock = [...currentBlock];
       console.log("ArrowDown");
       break;
     case " ":
-      // if (O[0].y === 19) return;
       // 블럭의 마지막 y 값을 찾기위한 = lastY;
       let lastY = 0;
-      for (let index = 0; index < O.length; index++) {
-        const child = O[index];
+      for (let index = 0; index < currentBlock.length; index++) {
+        const child = currentBlock[index];
         if (child.y > lastY) {
           lastY = child.y;
         }
       }
       // child.y = 5 / lastY = 5 /blocks.length = 20
       // 전체 blocks.length 에서 현재 블럭 마지막 위치 lastY 빼주면서 내려갈 child.y 값 계산해줌.
-      for (let index = 0; index < O.length; index++) {
-        const child = O[index];
+      for (let index = 0; index < currentBlock.length; index++) {
+        const child = currentBlock[index];
         child.y += (blocks.length -1) - lastY;
+        // blocks에 위치 반영
+        blocks[child.y][child.x] = true;
+        console.log('nunu', child, blocks[child.y][child.x]);
       }
-      O = [...O];
+      currentBlock = JSON.parse(JSON.stringify(I));
       console.log("ArrowDown");
       break;
       // TODO: 모양바꾸기(블럭)
       // case "ArrowUp":
-      // if (O[0].y === 19) return;
+      // if (currentBlock[0].y === 19) return;
       // for (let index = 0; index < O.length; index++) {
-      //   const child = O[index];
+      //   const child = currentBlock[index];
       //   child.y += 1;
       // }
       // O = [...O];
@@ -100,9 +105,14 @@ const keyEvent = (event) => {
 };
 $: checkGrid = (x, y) => {
   let isFill = false;
-  for (let index = 0; index < O.length; index++) {
-    const child = O[index]; 
-    if (child.x === x && child.y === y) {
+  for (let index = 0; index < currentBlock.length; index++) {
+    const child = currentBlock[index];
+
+    // if (child.x === x && child.y === y) {
+    if (
+      (child.x === x && child.y === y) // O블럭의 위치 채크
+      || (blocks[y][x]) // blocks의 위치도 채크
+    ) {
       isFill = true;
       break;
     }
