@@ -1,4 +1,4 @@
-<!-- TODO: 'spaceBar'로 끝까지 내리고, 고정, 다음블럭 부르기(랜덤?)
+<!-- TODO: 고정, 다음블럭 부르기(랜덤?)
 TODO: 블럭들 transform
 TODO: x 한줄이 다 차면 없애기(한줄 out) - score +10
 TODO: timer 1000 - blocks y + 1 (한줄씩 내려오기) -->
@@ -7,7 +7,6 @@ TODO: timer 1000 - blocks y + 1 (한줄씩 내려오기) -->
 import { onDestroy } from 'svelte';
 
 const blocks = [
-  [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
@@ -58,10 +57,29 @@ const keyEvent = (event) => {
       console.log("arrowRight");
       break;
     case "ArrowDown":
-      if (O[0].y === 19) return;
+      if (O[0].y === 18) return;
       for (let index = 0; index < O.length; index++) {
         const child = O[index];
         child.y += 1;
+      }
+      O = [...O];
+      console.log("ArrowDown");
+      break;
+    case " ":
+      // if (O[0].y === 19) return;
+      // 블럭의 마지막 y 값을 찾기위한 = lastY;
+      let lastY = 0;
+      for (let index = 0; index < O.length; index++) {
+        const child = O[index];
+        if (child.y > lastY) {
+          lastY = child.y;
+        }
+      }
+      // child.y = 5 / lastY = 5 /blocks.length = 20
+      // 전체 blocks.length 에서 현재 블럭 마지막 위치 lastY 빼주면서 내려갈 child.y 값 계산해줌.
+      for (let index = 0; index < O.length; index++) {
+        const child = O[index];
+        child.y += (blocks.length -1) - lastY;
       }
       O = [...O];
       console.log("ArrowDown");
